@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,13 +14,27 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    @NotEmpty
     private String bookTitle;
+    @NotEmpty
     private String author;
+    @NotEmpty
     private String year;
     private String isbn;
+
+    public Boolean getIn() {
+
+        return in;
+    }
+
+    public void setIn(Boolean in) {
+        this.in = in;
+    }
+
+    private Boolean in;
+
+
     /*private image image (?)*/
-    private boolean in = true;
 
     public long getId() {
         return id;
@@ -59,11 +76,5 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public boolean isIn() {
-        return in;
-    }
 
-    public void setIn(boolean in) {
-        this.in = in;
-    }
 }
