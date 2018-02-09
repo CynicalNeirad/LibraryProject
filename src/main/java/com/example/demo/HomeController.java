@@ -9,9 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.persistence.Id;
-import javax.security.sasl.AuthorizeCallback;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -40,12 +37,12 @@ public class HomeController {
     @GetMapping("/checkoutbook")
     public String checkoutbook( Model model){
 
-        model.addAttribute("book", library.findAllByBorrowed("true"));
+        model.addAttribute("book", library.findAllByBorrowed("In"));
         return"takeoutbook";
     }
     @GetMapping("/returnbooks")
     public String returnbook(Model model){
-        model.addAttribute("book", library.findAllByBorrowed("false")); //set this up to search for In = False
+        model.addAttribute("book", library.findAllByBorrowed("Out")); //set this up to search for In = False
         return"returnbook";
     }
 
@@ -55,7 +52,7 @@ public class HomeController {
         if (result.hasErrors()) {
             return "addbooks";
         }
-        book.setBorrowed("true");
+        book.setBorrowed("In");
         if (book.getBookPicture().isEmpty() == true){
             book.setBookPicture("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Book_Collage.png/1920px-Book_Collage.png");}
         library.save(book);
@@ -63,16 +60,18 @@ public class HomeController {
     }
     @RequestMapping("/checkout/{id}")
     public String processCheckout(@PathVariable("id") long id, Model model){
-        (library.findOne(id)).setBorrowed("false");
+        (library.findOne(id)).setBorrowed("Out");
         library.save(library.findOne(id));
-        return "redirect:/checkoutbook";
+        model.addAttribute("book", library.findOne(id));
+        return "/checkedoutBookinfo";
     }
 
     @RequestMapping("/return/{id}")
     public String processReturn(@PathVariable("id") long id, Model model){
-        (library.findOne(id)).setBorrowed("true");
+        (library.findOne(id)).setBorrowed("In");
         library.save(library.findOne(id));
-        return "redirect:/returnbooks";
+        model.addAttribute("book", library.findOne(id));
+        return "/checkedoutBookinfo";
 
     }
 

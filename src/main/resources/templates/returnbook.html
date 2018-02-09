@@ -21,17 +21,12 @@
             <li ><a href="/">Mainpage</a></li>
             <li><a href="/listbooks">Book List</a></li>
             <li><a href="/addbooks">Add a book</a></li>
-            <li><a href="/checkout">Check out a Book</a></li>
+            <li><a href="/checkoutbook">Check out a Book</a></li>
             <li class="active"><a href="/returnbooks">Return Book</a></li>
 
         </ul>
     </div>
 </nav>
-
-<div class="success">
-    <p><strong>Thank you!</strong> You have returned your book</p>
-</div>
-
 
 <table>
     <tr th:each="book : ${book}">

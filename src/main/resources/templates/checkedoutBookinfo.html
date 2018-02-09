@@ -19,9 +19,9 @@
         </div>
         <ul class="nav navbar-nav">
             <li ><a href="/">Mainpage</a></li>
-            <li><a href="/listbooks">Book List</a></li>
+            <li><a href="/booklist">Book List</a></li>
             <li><a href="/addbooks">Add a book</a></li>
-            <li class="active"><a href="/checkoutbook">Check out a Book</a></li>
+            <li><a href="/checkoutbook">Check out a Book</a></li>
             <li><a href="/returnbooks">Return Book</a></li>
 
         </ul>
@@ -29,8 +29,18 @@
 </nav>
 
 
+
+
+<a href="/listbooks">Return to book list</a><br/>
 <table>
     <tr th:each="book : ${book}">
+
+
+        <div th:switch="${book.borrowed}">
+            <p th:case="In"> Thank you for returning your book.</p>
+            <p th:case="Out">Thank you for checking out a book.</p>
+        </div>
+
         <th>Title:</th>
         <td th:text="${book.bookTitle}"></td>
 
@@ -43,13 +53,12 @@
         <th>ISBN:</th>
         <td th:text="${book.isbn}"></td>
 
+        <th>Status:</th>
+        <td th:text="${book.borrowed}"></td>
+
         <th>Image:</th>
         <td> <img th:src="${book.bookPicture}" class="w3-round" height="50" width="63"> </img> </td> <br/>
 
-
-        <th>Status:</th>
-        <td th:text="${book.borrowed}"></td> <br/>
-        <a th:href="@{/checkout/{id}(id=${book.id})}">Check this book out</a>
     </tr>
 </table>
 
