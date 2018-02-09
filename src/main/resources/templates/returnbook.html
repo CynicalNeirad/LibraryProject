@@ -1,10 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>Book Inventory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/help.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Library</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li ><a href="/">Mainpage</a></li>
+            <li><a href="/listbooks">Book List</a></li>
+            <li><a href="/addbooks">Add a book</a></li>
+            <li><a href="/checkout">Check out a Book</a></li>
+            <li class="active"><a href="/returnbooks">Return Book</a></li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="success">
+    <p><strong>Thank you!</strong> You have returned your book</p>
+</div>
+
+
+<table>
+    <tr th:each="book : ${book}">
+        <th>Title:</th>
+        <td th:text="${book.bookTitle}"></td>
+
+        <th>Author:</th>
+        <td th:text="${book.author}"></td>
+
+        <th>Year of publication:</th>
+        <td th:text="${book.year}"></td>
+
+        <th>ISBN:</th>
+        <td th:text="${book.isbn}"></td>
+
+        <th>Image:</th>
+        <td> <img th:src="${book.bookPicture}" class="w3-round" height="50" width="63"> </img> </td> <br/>
+
+
+        <th>Status:</th>
+        <td th:text="${book.borrowed}"></td> <br/>
+        <a th:href="@{/return/{id}(id=${book.id})}">Check this book in</a>
+    </tr>
+</table>
+
 
 </body>
 </html>

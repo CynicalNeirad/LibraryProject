@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>userinfo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/help.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">Library</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li ><a href="/">Mainpage</a></li>
+            <li ><a href="/booklists">Book List</a></li>
+            <li class="active"><a href="/addbook">Add a book</a></li>
+            <li><a href="/checkoutbook">Check out a Book</a></li>
+            <li><a href="/returnbooks">Return Book</a></li>
+        </ul>
+    </div>
+</nav>
+
+<form action = "#"
+      th:action="@{/processbook}"
+      th:object="${book}"
+      method="post">
+    <input type="hidden" th:field="*{id}" />
+    Name :<input type="text" th:field= "*{bookTitle}" />
+    <span th:if="${#fields.hasErrors('bookTitle')}"
+          th:errors="*{bookTitle}"></span><br/>
+    Author :<input type="text" th:field= "*{author}" />
+    <span th:if="${#fields.hasErrors('author')}"
+          th:errors="*{author}"></span><br/>
+    Year :<input type="text" th:field= "*{year}" />
+    <span th:if="${#fields.hasErrors('year')}"
+          th:errors="*{year}"></span><br/>
+    ISBN :<input type="text" th:field= "*{isbn}" />
+    <span th:if="${#fields.hasErrors('isbn')}"
+          th:errors="*{isbn}"></span><br/>
+    Image :<input type="text" th:field= "*{bookPicture}" />
+    <span th:if="${#fields.hasErrors('bookPicture')}"
+          th:errors="*{bookPicture}"></span><br/>
+
+
+    <br />
+    <input type="submit" values="Submit" />
+</form>
 </body>
 </html>

@@ -37,16 +37,15 @@ public class HomeController {
         model.addAttribute("book", new Book());
         return"addbooks";
     }
-    @GetMapping("/checkout")
+    @GetMapping("/checkoutbook")
     public String checkoutbook( Model model){
 
-        model.addAttribute("book", library.findByAuthor("true"));
-        https://github.com/aoa4eva/CourseWithSearch/blob/master/src/main/java/me/afua/demo/MainController.java
-        return"listbooks";
+        model.addAttribute("book", library.findAllByBorrowed("true"));
+        return"takeoutbook";
     }
-    @GetMapping("/return")
+    @GetMapping("/returnbooks")
     public String returnbook(Model model){
-        model.addAttribute("book", library.findAll()); //set this up to search for In = False
+        model.addAttribute("book", library.findAllByBorrowed("false")); //set this up to search for In = False
         return"returnbook";
     }
 
@@ -56,23 +55,25 @@ public class HomeController {
         if (result.hasErrors()) {
             return "addbooks";
         }
-        book.setIn("true");
+        book.setBorrowed("true");
+        if (book.getBookPicture().isEmpty() == true){
+            book.setBookPicture("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Book_Collage.png/1920px-Book_Collage.png");}
         library.save(book);
         return "redirect:/listbooks";
     }
     @RequestMapping("/checkout/{id}")
     public String processCheckout(@PathVariable("id") long id, Model model){
-        (library.findOne(id)).setIn("false");
-        System.out.println(id);
-        System.out.println(library.findOne(id).getIn());
+        (library.findOne(id)).setBorrowed("false");
         library.save(library.findOne(id));
-        return "redirect:/checkout";
+        return "redirect:/checkoutbook";
     }
-    /*
-    @PostMapping("/returnbook")
-    public String processReturn(Book id){
-        library.findOne(id).in = true;
-        return "redirect/return";
-    }*/
+
+    @RequestMapping("/return/{id}")
+    public String processReturn(@PathVariable("id") long id, Model model){
+        (library.findOne(id)).setBorrowed("true");
+        library.save(library.findOne(id));
+        return "redirect:/returnbooks";
+
+    }
 
 }

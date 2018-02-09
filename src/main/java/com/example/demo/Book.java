@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.awt.*;
 
 @Entity
 public class Book {
@@ -21,18 +22,25 @@ public class Book {
     @NotEmpty
     private String year;
     private String isbn;
+    private String borrowed;
+    private String bookPicture;
 
-    public Boolean getIn() {
 
-        return in;
+    public String getBookPicture() {
+        return bookPicture;
     }
 
-    public void setIn(Boolean in) {
-        this.in = in;
+    public void setBookPicture(String bookPicture) {
+        this.bookPicture = bookPicture;
     }
 
-    private Boolean in;
+    public String getBorrowed() {
+        return borrowed;
+    }
 
+    public void setBorrowed(String borrowed) {
+        this.borrowed = borrowed;
+    }
 
     /*private image image (?)*/
 
